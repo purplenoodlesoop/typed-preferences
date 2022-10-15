@@ -2,9 +2,9 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:typed_preferences/src/dao/preferences_driver.dart';
-import 'package:typed_preferences/src/observer/preferences_driver_observer.dart';
 import 'package:typed_preferences/src/dao/preferences_entry.dart';
 import 'package:typed_preferences/src/dao/typed_preferences_dao.dart';
+import 'package:typed_preferences/src/observer/preferences_driver_observer.dart';
 
 class LoggerPreferencesDriverObserver extends PreferencesDriverObserver {
   const LoggerPreferencesDriverObserver();
@@ -31,9 +31,14 @@ class LoggerPreferencesDriverObserver extends PreferencesDriverObserver {
 
 class SettingsDao extends TypedPreferencesDao {
   SettingsDao(PreferencesDriver driver)
-      : super(name: 'settings', driver: driver);
+      : super(
+          name: 'settings',
+          driver: driver,
+        );
 
   PreferencesEntry<String> get name => stringEntry('name');
+
+  PreferencesEntry<int> get age => intEntry('age');
 }
 
 Future<void> main() async {
@@ -46,9 +51,12 @@ Future<void> main() async {
 
   final settingsDao = SettingsDao(driver);
 
-  print(settingsDao.name.value);
   await settingsDao.name.setValue('Joe');
+  await settingsDao.age.setValue(20);
   print(settingsDao.name.value);
+  print(settingsDao.age.value);
+  await settingsDao.name.setValue('Jeff');
+  await settingsDao.age.setValue(30);
+  print(settingsDao.name.value);
+  print(settingsDao.age.value);
 }
-
-//
