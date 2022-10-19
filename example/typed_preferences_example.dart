@@ -17,6 +17,7 @@ class LoggerPreferencesDriverObserver extends PreferencesDriverObserver {
 
   @override
   void onSet<T>(String path, T value, bool isSuccess) {
+    super.onSet(path, value, isSuccess);
     _log(
       (b) => b
         ..write('Set ')
@@ -30,10 +31,7 @@ class LoggerPreferencesDriverObserver extends PreferencesDriverObserver {
 }
 
 class SettingsDao extends TypedPreferencesDao {
-  SettingsDao(PreferencesDriver driver)
-      : super(
-          driver: driver,
-        );
+  SettingsDao(PreferencesDriver driver) : super(driver: driver);
 
   @override
   String get name => 'settings';
