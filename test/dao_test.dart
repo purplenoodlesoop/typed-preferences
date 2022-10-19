@@ -3,10 +3,7 @@ import 'package:test/test.dart';
 import 'package:typed_preferences/typed_preferences.dart';
 
 class _DaoTestDao extends TypedPreferencesDao {
-  _DaoTestDao({required PreferencesDriver driver}) : super(driver: driver);
-
-  @override
-  String get name => 'dao_test';
+  _DaoTestDao({required PreferencesDriver driver}) : super(driver);
 
   PreferencesEntry<String> get exampleString => stringEntry('String');
 
@@ -45,7 +42,7 @@ void _testEntry<T extends Object>(
 
   group('PreferencesEntry<$T> >', () {
     test('Key gets prefixed with typed and DAO name', () {
-      expect(entry.key, equals('typed.dao_test.$T'));
+      expect(entry.key, equals('typed._testdao.$T'));
     });
     test('Value does not exists before setting it', expectDoesNotExists);
     test('Setting value changes .value and .exists getters output', () async {
