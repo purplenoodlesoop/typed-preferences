@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:typed_preferences/src/dao/preferences_entry.dart';
 import 'package:typed_preferences/src/observer/preferences_driver_observer.dart';
 
+/// Provides access to operations that affect all [SharedPreferences] values.
 abstract class GlobalPreferencesDriverOperator {
   Set<String> get keys;
 
@@ -12,6 +13,8 @@ abstract class GlobalPreferencesDriverOperator {
   Future<void> reload();
 }
 
+/// Provides access to CRUD-related operation that affect a given
+/// [PreferencesEntry]
 abstract class EntryPreferencesDriverOperator {
   bool exists<T extends Object>(PreferencesEntry<T> entry);
 
@@ -22,6 +25,12 @@ abstract class EntryPreferencesDriverOperator {
   T? getValue<T extends Object>(PreferencesEntry<T> entry);
 }
 
+/// Combines [GlobalPreferencesDriverOperator]
+/// and [EntryPreferencesDriverOperator], while providing a default
+/// implementation for the interfaces.
+///
+/// Accepts an optional list of observers that implement
+/// [PreferencesDriverObserver] and invokes appropriate hook methods on
 abstract class PreferencesDriver
     implements GlobalPreferencesDriverOperator, EntryPreferencesDriverOperator {
   factory PreferencesDriver({
@@ -30,7 +39,9 @@ abstract class PreferencesDriver
   }) = _PreferencesDriver;
 }
 
-class UnknownPreferencesEntryException implements Exception {
+/// Thrown when [EntryPreferencesDriverOperator] is unable to process a
+/// given [PreferencesEntry] implementation due to type-parameter [T].
+class UnknownPreferencesEntryException<T extends Object> implements Exception {
   const UnknownPreferencesEntryException();
 }
 
@@ -62,7 +73,7 @@ class _PreferencesDriver implements PreferencesDriver {
     if (entry is PreferencesEntry<int>) return onInt();
     if (entry is PreferencesEntry<double>) return onDouble();
     if (entry is PreferencesEntry<List<String>>) return onsStringList();
-    throw const UnknownPreferencesEntryException();
+    throw UnknownPreferencesEntryException<T>();
   }
 
   @override
