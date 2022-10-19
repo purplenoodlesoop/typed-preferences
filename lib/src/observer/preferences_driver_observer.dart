@@ -11,5 +11,5 @@ abstract class PreferencesDriverObserver {
 
   void onReload() {}
 
-  void onClear() {}
+  void onClear(bool isSuccess) {}
 }

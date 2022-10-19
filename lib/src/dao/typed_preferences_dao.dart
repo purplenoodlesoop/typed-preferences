@@ -3,18 +3,17 @@ import 'package:typed_preferences/src/dao/preferences_entry.dart';
 import 'package:typed_preferences/src/util/memento.dart';
 
 abstract class TypedPreferencesDao {
-  final String _name;
   final PreferencesDriver _driver;
 
   TypedPreferencesDao({
-    required String name,
     required PreferencesDriver driver,
-  })  : _name = name,
-        _driver = driver;
+  }) : _driver = driver;
 
   late final Memento _memento = Memento();
 
-  String _assembleKey(String key) => 'typed.$_name.$key';
+  String get name;
+
+  String _assembleKey(String key) => 'typed.$name.$key';
 
   PreferencesEntry<T> _entry<T extends Object>(String key) {
     final fullKey = _assembleKey(key);
