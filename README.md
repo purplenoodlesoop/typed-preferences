@@ -22,7 +22,9 @@ extension UserKey on Never {
   static const String name = 'user.name';
   static const String age = 'user.age';
 }
+```
 
+```dart
 class UserDao {
   final SharedPreferences _preferences;
 
