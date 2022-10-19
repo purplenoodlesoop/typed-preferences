@@ -6,10 +6,7 @@ import 'package:test/scaffolding.dart';
 import 'package:typed_preferences/typed_preferences.dart';
 
 class _DriverTestDao extends TypedPreferencesDao {
-  _DriverTestDao({required PreferencesDriver driver}) : super(driver: driver);
-
-  @override
-  String get name => 'driver_test';
+  _DriverTestDao({required PreferencesDriver driver}) : super(driver);
 
   PreferencesEntry<String> get first => stringEntry('first');
 

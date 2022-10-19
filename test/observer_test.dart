@@ -44,10 +44,7 @@ class _ActionWriterObserver extends PreferencesDriverObserver {
 }
 
 class _ObserverTestDao extends TypedPreferencesDao {
-  _ObserverTestDao({required PreferencesDriver driver}) : super(driver: driver);
-
-  @override
-  String get name => 'observer_test';
+  _ObserverTestDao({required PreferencesDriver driver}) : super(driver);
 
   PreferencesEntry<String> get entry => stringEntry('key');
 }

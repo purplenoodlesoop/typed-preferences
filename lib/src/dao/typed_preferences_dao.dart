@@ -28,13 +28,12 @@ import 'package:typed_preferences/src/util/memento.dart';
 abstract class TypedPreferencesDao {
   final PreferencesDriver _driver;
 
-  TypedPreferencesDao({
-    required PreferencesDriver driver,
-  }) : _driver = driver;
+  TypedPreferencesDao(PreferencesDriver driver) : _driver = driver;
 
   late final Memento _memento = Memento();
 
-  String get name;
+  late final String name =
+      runtimeType.toString().replaceFirst('Dao', '').toLowerCase();
 
   String _assembleKey(String key) => 'typed.$name.$key';
 
