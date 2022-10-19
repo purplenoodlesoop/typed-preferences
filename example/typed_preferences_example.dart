@@ -32,13 +32,15 @@ class LoggerPreferencesDriverObserver extends PreferencesDriverObserver {
 class SettingsDao extends TypedPreferencesDao {
   SettingsDao(PreferencesDriver driver)
       : super(
-          name: 'settings',
           driver: driver,
         );
 
-  PreferencesEntry<String> get name => stringEntry('name');
+  @override
+  String get name => 'settings';
 
-  PreferencesEntry<int> get age => intEntry('age');
+  PreferencesEntry<String> get userName => stringEntry('name');
+
+  PreferencesEntry<int> get userAge => intEntry('age');
 }
 
 Future<void> main() async {
@@ -51,12 +53,12 @@ Future<void> main() async {
 
   final settingsDao = SettingsDao(driver);
 
-  await settingsDao.name.setValue('Joe');
-  await settingsDao.age.setValue(20);
-  print(settingsDao.name.value);
-  print(settingsDao.age.value);
-  await settingsDao.name.setValue('Jeff');
-  await settingsDao.age.setValue(30);
-  print(settingsDao.name.value);
-  print(settingsDao.age.value);
+  await settingsDao.userName.setValue('Joe');
+  await settingsDao.userAge.setValue(20);
+  print(settingsDao.userName.value);
+  print(settingsDao.userAge.value);
+  await settingsDao.userName.setValue('Jeff');
+  await settingsDao.userAge.setValue(30);
+  print(settingsDao.userName.value);
+  print(settingsDao.userAge.value);
 }

@@ -24,7 +24,7 @@ abstract class PreferencesDriver
     implements GlobalPreferencesDriverOperator, EntryPreferencesDriverOperator {
   factory PreferencesDriver({
     required SharedPreferences sharedPreferences,
-    required List<PreferencesDriverObserver> observers,
+    List<PreferencesDriverObserver> observers,
   }) = _PreferencesDriver;
 }
 
@@ -38,7 +38,7 @@ class _PreferencesDriver implements PreferencesDriver {
 
   _PreferencesDriver({
     required this.sharedPreferences,
-    required this.observers,
+    this.observers = const [],
   });
 
   void _forObservers(
@@ -68,11 +68,11 @@ class _PreferencesDriver implements PreferencesDriver {
 
   @override
   Future<bool> clear() async {
-    final result = await sharedPreferences.clear();
+    final isSuccess = await sharedPreferences.clear();
 
-    _forObservers((observer) => observer.onClear());
+    _forObservers((observer) => observer.onClear(isSuccess));
 
-    return result;
+    return isSuccess;
   }
 
   @override
