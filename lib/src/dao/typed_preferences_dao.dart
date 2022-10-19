@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:typed_preferences/src/dao/preferences_driver.dart';
 import 'package:typed_preferences/src/dao/preferences_entry.dart';
 import 'package:typed_preferences/src/util/memento.dart';
@@ -24,14 +25,24 @@ abstract class TypedPreferencesDao {
     );
   }
 
+  @nonVirtual
+  @protected
   PreferencesEntry<String> stringEntry(String key) => _entry(key);
 
+  @nonVirtual
+  @protected
   PreferencesEntry<int> intEntry(String key) => _entry(key);
 
+  @nonVirtual
+  @protected
   PreferencesEntry<double> doubleEntry(String key) => _entry(key);
 
+  @nonVirtual
+  @protected
   PreferencesEntry<bool> boolEntry(String key) => _entry(key);
 
+  @nonVirtual
+  @protected
   PreferencesEntry<List<String>> stringListEntry(String key) => _entry(key);
 }
 
