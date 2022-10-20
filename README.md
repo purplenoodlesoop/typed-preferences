@@ -90,9 +90,9 @@ class ExampleDao extends TypedPreferencesDao {
 ```
 
 A few things are happening behind the scenes:
-    1. Every key passed to the methods is prefixed with `typed.` and the name of the DAO. So, in the case of `someEntry`, the resulting key would be `typed.example.some_key`. The `example` name can be overridden via the `name` getter.
-    2. Entries are cached by key. So, only on the first access to the `someEntry` field the object will be created and written in the cache by the given `some_key`,
-    3. Observers connected to the `PreferencesDriver` will fire on declared entries manipulations.
+  1. Every key passed to the methods is prefixed with `typed.` and the name of the DAO. So, in the case of `someEntry`, the resulting key would be `typed.example.some_key`. The `example` name can be overridden via the `name` getter.
+  2. Entries are cached by key. So, only on the first access to the `someEntry` field the object will be created and written in the cache by the given `some_key`,
+  3. Observers connected to the `PreferencesDriver` will fire on declared entries manipulations.
 
 ### Observers
 
