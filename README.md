@@ -1,5 +1,13 @@
 # typed_preferences 
 
+[![Pub](https://img.shields.io/pub/v/typed_preferences.svg)](https://pub.dev/packages/typed_preferences)
+[![GitHub Stars](https://img.shields.io/github/stars/purplenoodlesoop/typed-preferences.svg)](https://github.com/purplenoodlesoop/typed-preferences)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://en.wikipedia.org/wiki/MIT_License)
+[![Linter](https://img.shields.io/badge/style-custom-brightgreen)](https://github.com/purplenoodlesoop/typed-preferences/blob/master/analysis_options.yaml)
+[![Code size](https://img.shields.io/github/languages/code-size/purplenoodlesoop/typed-preferences)](https://github.com/purplenoodlesoop/typed-preferences)
+
+---
+
 typed_preferences provides a type-safe wrapper around Shared Preferences with additional features like Observers and DAOs.
 
 ## Index
