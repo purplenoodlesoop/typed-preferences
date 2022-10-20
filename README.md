@@ -1,5 +1,13 @@
 # typed_preferences 
 
+[![Pub](https://img.shields.io/pub/v/typed_preferences.svg)](https://pub.dev/packages/typed_preferences)
+[![GitHub Stars](https://img.shields.io/github/stars/purplenoodlesoop/typed-preferences.svg)](https://github.com/purplenoodlesoop/typed-preferences)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://en.wikipedia.org/wiki/MIT_License)
+[![Linter](https://img.shields.io/badge/style-custom-brightgreen)](https://github.com/purplenoodlesoop/typed-preferences/blob/master/analysis_options.yaml)
+[![Code size](https://img.shields.io/github/languages/code-size/purplenoodlesoop/typed-preferences)](https://github.com/purplenoodlesoop/typed-preferences)
+
+---
+
 typed_preferences provides a type-safe wrapper around Shared Preferences with additional features like Observers and DAOs.
 
 ## Index
@@ -90,9 +98,9 @@ class ExampleDao extends TypedPreferencesDao {
 ```
 
 A few things are happening behind the scenes:
-    1. Every key passed to the methods is prefixed with `typed.` and the name of the DAO. So, in the case of `someEntry`, the resulting key would be `typed.example.some_key`. The `example` name can be overridden via the `name` getter.
-    2. Entries are cached by key. So, only on the first access to the `someEntry` field the object will be created and written in the cache by the given `some_key`,
-    3. Observers connected to the `PreferencesDriver` will fire on declared entries manipulations.
+  1. Every key passed to the methods is prefixed with `typed.` and the name of the DAO. So, in the case of `someEntry`, the resulting key would be `typed.example.some_key`. The `example` name can be overridden via the `name` getter.
+  2. Entries are cached by key. So, only on the first access to the `someEntry` field the object will be created and written in the cache by the given `some_key`,
+  3. Observers connected to the `PreferencesDriver` will fire on declared entries manipulations.
 
 ### Observers
 

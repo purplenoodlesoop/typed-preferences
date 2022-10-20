@@ -1,10 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:typed_preferences/src/dao/preferences_driver.dart';
-import 'package:typed_preferences/src/dao/preferences_entry.dart';
-import 'package:typed_preferences/src/dao/typed_preferences_dao.dart';
-import 'package:typed_preferences/src/observer/preferences_driver_observer.dart';
+import 'package:typed_preferences/typed_preferences.dart';
 
 class LoggerPreferencesDriverObserver extends PreferencesDriverObserver {
   const LoggerPreferencesDriverObserver();
