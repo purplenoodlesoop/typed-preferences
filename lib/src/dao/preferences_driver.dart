@@ -2,6 +2,7 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:typed_preferences/src/dao/preferences_entry.dart';
+import 'package:typed_preferences/src/observer/combining_driver_observer.dart';
 import 'package:typed_preferences/src/observer/preferences_driver_observer.dart';
 
 /// Provides access to operations that affect all [SharedPreferences] values.
@@ -47,18 +48,12 @@ class UnknownPreferencesEntryException<T extends Object> implements Exception {
 
 class _PreferencesDriver implements PreferencesDriver {
   final SharedPreferences sharedPreferences;
-  final List<PreferencesDriverObserver> observers;
+  final PreferencesDriverObserver observer;
 
   _PreferencesDriver({
     required this.sharedPreferences,
-    this.observers = const [],
-  });
-
-  void _forObservers(
-    void Function(PreferencesDriverObserver observer) callback,
-  ) {
-    observers.forEach(callback);
-  }
+    List<PreferencesDriverObserver> observers = const [],
+  }) : observer = CombiningDriverObserver(observers: observers);
 
   R _matchEntry<T extends Object, R>(
     PreferencesEntry<T> entry, {
@@ -83,7 +78,7 @@ class _PreferencesDriver implements PreferencesDriver {
   Future<bool> clear() async {
     final isSuccess = await sharedPreferences.clear();
 
-    _forObservers((observer) => observer.onClear(isSuccess));
+    observer.onClear(isSuccess);
 
     return isSuccess;
   }
@@ -92,7 +87,7 @@ class _PreferencesDriver implements PreferencesDriver {
   Future<void> reload() async {
     await sharedPreferences.reload();
 
-    _forObservers((observer) => observer.onReload());
+    observer.onReload();
   }
 
   @override
@@ -104,9 +99,7 @@ class _PreferencesDriver implements PreferencesDriver {
     final path = entry.key;
     final isSuccess = await sharedPreferences.remove(path);
 
-    _forObservers(
-      (observer) => observer.onRemove<T>(path, isSuccess),
-    );
+    observer.onRemove<T>(path, isSuccess);
 
     return isSuccess;
   }
@@ -129,9 +122,7 @@ class _PreferencesDriver implements PreferencesDriver {
       ),
     );
 
-    _forObservers(
-      (observer) => observer.onSet(key, value, isSuccess),
-    );
+    observer.onSet(key, value, isSuccess);
 
     return isSuccess;
   }
@@ -148,9 +139,7 @@ class _PreferencesDriver implements PreferencesDriver {
       onsStringList: () => sharedPreferences.getStringList(key),
     );
 
-    _forObservers(
-      (observer) => observer.onGet(key, value),
-    );
+    observer.onGet(key, value);
 
     return value as T?;
   }
