@@ -2,6 +2,7 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:typed_preferences/src/dao/preferences_entry.dart';
+import 'package:typed_preferences/src/observer/combining_driver_observer.dart';
 import 'package:typed_preferences/src/observer/preferences_driver_observer.dart';
 
 /// Provides access to operations that affect all [SharedPreferences] values.
@@ -47,18 +48,12 @@ class UnknownPreferencesEntryException<T extends Object> implements Exception {
 
 class _PreferencesDriver implements PreferencesDriver {
   final SharedPreferences sharedPreferences;
-  final List<PreferencesDriverObserver> observers;
+  final PreferencesDriverObserver observer;
 
   _PreferencesDriver({
     required this.sharedPreferences,
-    this.observers = const [],
-  });
-
-  void _forObservers(
-    void Function(PreferencesDriverObserver observer) callback,
-  ) {
-    observers.forEach(callback);
-  }
+    List<PreferencesDriverObserver> observers = const [],
+  }) : observer = CombiningDriverObserver(observers: observers);
 
   R _matchEntry<T extends Object, R>(
     PreferencesEntry<T> entry, {
@@ -81,18 +76,22 @@ class _PreferencesDriver implements PreferencesDriver {
 
   @override
   Future<bool> clear() async {
+    observer.beforeClear();
+
     final isSuccess = await sharedPreferences.clear();
 
-    _forObservers((observer) => observer.onClear(isSuccess));
+    observer.onClear(isSuccess);
 
     return isSuccess;
   }
 
   @override
   Future<void> reload() async {
+    observer.beforeReload();
+
     await sharedPreferences.reload();
 
-    _forObservers((observer) => observer.onReload());
+    observer.onReload();
   }
 
   @override
@@ -102,11 +101,12 @@ class _PreferencesDriver implements PreferencesDriver {
   @override
   Future<bool> remove<T extends Object>(PreferencesEntry<T> entry) async {
     final path = entry.key;
+
+    observer.beforeRemove<T>(path);
+
     final isSuccess = await sharedPreferences.remove(path);
 
-    _forObservers(
-      (observer) => observer.onRemove(path, isSuccess),
-    );
+    observer.onRemove<T>(path, isSuccess);
 
     return isSuccess;
   }
@@ -117,6 +117,9 @@ class _PreferencesDriver implements PreferencesDriver {
     T value,
   ) async {
     final key = entry.key;
+
+    observer.beforeSet<T>(key, value);
+
     final isSuccess = await _matchEntry<T, Future<bool>>(
       entry,
       onString: () => sharedPreferences.setString(key, value as String),
@@ -129,9 +132,7 @@ class _PreferencesDriver implements PreferencesDriver {
       ),
     );
 
-    _forObservers(
-      (observer) => observer.onSet(key, value, isSuccess),
-    );
+    observer.onSet(key, value, isSuccess);
 
     return isSuccess;
   }
@@ -139,6 +140,9 @@ class _PreferencesDriver implements PreferencesDriver {
   @override
   T? getValue<T extends Object>(PreferencesEntry<T> entry) {
     final key = entry.key;
+
+    observer.beforeGet<T>(key);
+
     final value = _matchEntry<T, Object?>(
       entry,
       onString: () => sharedPreferences.getString(key),
@@ -148,9 +152,7 @@ class _PreferencesDriver implements PreferencesDriver {
       onsStringList: () => sharedPreferences.getStringList(key),
     );
 
-    _forObservers(
-      (observer) => observer.onGet(key, value),
-    );
+    observer.onGet(key, value);
 
     return value as T?;
   }

@@ -15,20 +15,44 @@ abstract class PreferencesDriverObserver {
   @protected
   @optionalTypeArgs
   @mustCallSuper
-  void onGet<T>(String path, T? value) {}
+  void beforeGet<T extends Object>(String path) {}
 
   @protected
   @optionalTypeArgs
   @mustCallSuper
-  void onSet<T>(String path, T value, bool isSuccess) {}
+  void onGet<T extends Object>(String path, T? value) {}
+
+  @protected
+  @optionalTypeArgs
+  @mustCallSuper
+  void beforeSet<T extends Object>(String path, T value) {}
+
+  @protected
+  @optionalTypeArgs
+  @mustCallSuper
+  void onSet<T extends Object>(String path, T value, bool isSuccess) {}
+
+  @protected
+  @optionalTypeArgs
+  @mustCallSuper
+  void beforeRemove<T extends Object>(String path) {}
+
+  @protected
+  @optionalTypeArgs
+  @mustCallSuper
+  void onRemove<T extends Object>(String path, bool isSuccess) {}
 
   @protected
   @mustCallSuper
-  void onRemove(String path, bool isSuccess) {}
+  void beforeReload() {}
 
   @protected
   @mustCallSuper
   void onReload() {}
+
+  @protected
+  @mustCallSuper
+  void beforeClear() {}
 
   @protected
   @mustCallSuper

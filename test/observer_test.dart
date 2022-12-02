@@ -3,7 +3,7 @@ import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 import 'package:typed_preferences/typed_preferences.dart';
 
-class _ActionWriterObserver extends PreferencesDriverObserver {
+class _ActionWriterObserver implements PreferencesDriverObserver {
   final List<String> _actions;
 
   _ActionWriterObserver(this._actions);
@@ -13,33 +13,53 @@ class _ActionWriterObserver extends PreferencesDriverObserver {
   }
 
   @override
-  void onGet<T>(String path, T? value) {
-    super.onGet<T>(path, value);
+  void onGet<T extends Object>(String path, T? value) {
     _writeAction(['onGet', path, value]);
   }
 
   @override
-  void onSet<T>(String path, T value, bool isSuccess) {
-    super.onSet<T>(path, value, isSuccess);
+  void onSet<T extends Object>(String path, T value, bool isSuccess) {
     _writeAction(['onSet', path, value, isSuccess]);
   }
 
   @override
-  void onRemove(String path, bool isSuccess) {
-    super.onRemove(path, isSuccess);
+  void onRemove<T extends Object>(String path, bool isSuccess) {
     _writeAction(['onRemove', path, isSuccess]);
   }
 
   @override
   void onReload() {
-    super.onReload();
     _writeAction(['onReload']);
   }
 
   @override
   void onClear(bool isSuccess) {
-    super.onClear(isSuccess);
     _writeAction(['onClear', isSuccess]);
+  }
+
+  @override
+  void beforeClear() {
+    _writeAction(['beforeClear']);
+  }
+
+  @override
+  void beforeGet<T extends Object>(String path) {
+    _writeAction(['beforeGet', path, T]);
+  }
+
+  @override
+  void beforeReload() {
+    _writeAction(['beforeReload']);
+  }
+
+  @override
+  void beforeRemove<T extends Object>(String path) {
+    _writeAction(['beforeRemove', path, T]);
+  }
+
+  @override
+  void beforeSet<T extends Object>(String path, T value) {
+    _writeAction(['beforeSet', path, T]);
   }
 }
 
@@ -75,26 +95,34 @@ void main() {
     entry = _ObserverTestDao(driver: driver).entry;
   });
   group('PreferencesDriverObserver >', () {
-    test('onSet', () async {
+    test('set', () async {
       final isSuccess = await populate();
-      expectContainsAction(['onSet', key(), value, isSuccess]);
+      final path = key();
+      expectContainsAction(['beforeSet', path, String]);
+      expectContainsAction(['onSet', path, value, isSuccess]);
     });
-    test('onGet', () async {
+    test('get', () async {
       await populate();
       final value = entry.value;
-      expectContainsAction(['onGet', key(), value]);
+      final path = key();
+      expectContainsAction(['beforeGet', path, String]);
+      expectContainsAction(['onGet', path, value]);
     });
-    test('onRemove', () async {
+    test('remove', () async {
       await populate();
       final isSuccess = await entry.remove();
-      expectContainsAction(['onRemove', key(), isSuccess]);
+      final path = key();
+      expectContainsAction(['beforeRemove', path, String]);
+      expectContainsAction(['onRemove', path, isSuccess]);
     });
-    test('onReload', () async {
+    test('reload', () async {
       await driver.reload();
+      expectContainsAction(['beforeReload']);
       expectContainsAction(['onReload']);
     });
-    test('onClear', () async {
+    test('clear', () async {
       final isSuccess = await driver.clear();
+      expectContainsAction(['beforeClear']);
       expectContainsAction(['onClear', isSuccess]);
     });
   });

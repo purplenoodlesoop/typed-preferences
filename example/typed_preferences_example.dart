@@ -13,7 +13,21 @@ class LoggerPreferencesDriverObserver extends PreferencesDriverObserver {
   }
 
   @override
-  void onSet<T>(String path, T value, bool isSuccess) {
+  void beforeSet<T extends Object>(String path, T value) {
+    super.beforeSet(path, value);
+    _log(
+      (b) => b
+        ..write('Setting ')
+        ..write(path)
+        ..write(' of type ')
+        ..write(T)
+        ..write(' to ')
+        ..write(value),
+    );
+  }
+
+  @override
+  void onSet<T extends Object>(String path, T value, bool isSuccess) {
     super.onSet(path, value, isSuccess);
     _log(
       (b) => b
