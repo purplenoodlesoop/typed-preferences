@@ -15,32 +15,32 @@ abstract class PreferencesDriverObserver {
   @protected
   @optionalTypeArgs
   @mustCallSuper
-  void beforeGet<T>(String path) {}
+  void beforeGet<T extends Object>(String path) {}
 
   @protected
   @optionalTypeArgs
   @mustCallSuper
-  void onGet<T>(String path, T? value) {}
+  void onGet<T extends Object>(String path, T? value) {}
 
   @protected
   @optionalTypeArgs
   @mustCallSuper
-  void beforeSet<T>(String path, T value) {}
+  void beforeSet<T extends Object>(String path, T value) {}
 
   @protected
   @optionalTypeArgs
   @mustCallSuper
-  void onSet<T>(String path, T value, bool isSuccess) {}
+  void onSet<T extends Object>(String path, T value, bool isSuccess) {}
 
   @protected
   @optionalTypeArgs
   @mustCallSuper
-  void beforeRemove<T>(String path) {}
+  void beforeRemove<T extends Object>(String path) {}
 
   @protected
   @optionalTypeArgs
   @mustCallSuper
-  void onRemove<T>(String path, bool isSuccess) {}
+  void onRemove<T extends Object>(String path, bool isSuccess) {}
 
   @protected
   @mustCallSuper

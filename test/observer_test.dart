@@ -13,19 +13,19 @@ class _ActionWriterObserver extends PreferencesDriverObserver {
   }
 
   @override
-  void onGet<T>(String path, T? value) {
+  void onGet<T extends Object>(String path, T? value) {
     super.onGet<T>(path, value);
     _writeAction(['onGet', path, value]);
   }
 
   @override
-  void onSet<T>(String path, T value, bool isSuccess) {
+  void onSet<T extends Object>(String path, T value, bool isSuccess) {
     super.onSet<T>(path, value, isSuccess);
     _writeAction(['onSet', path, value, isSuccess]);
   }
 
   @override
-  void onRemove<T>(String path, bool isSuccess) {
+  void onRemove<T extends Object>(String path, bool isSuccess) {
     super.onRemove<T>(path, isSuccess);
     _writeAction(['onRemove', path, isSuccess]);
   }

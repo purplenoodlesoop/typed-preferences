@@ -19,7 +19,7 @@ class CombiningDriverObserver implements PreferencesDriverObserver {
   }
 
   @override
-  void beforeGet<T>(String path) {
+  void beforeGet<T extends Object>(String path) {
     _forObservers((observer) => observer.beforeGet<T>(path));
   }
 
@@ -29,12 +29,12 @@ class CombiningDriverObserver implements PreferencesDriverObserver {
   }
 
   @override
-  void beforeRemove<T>(String path) {
+  void beforeRemove<T extends Object>(String path) {
     _forObservers((observer) => observer.beforeRemove<T>(path));
   }
 
   @override
-  void beforeSet<T>(String path, T value) {
+  void beforeSet<T extends Object>(String path, T value) {
     _forObservers((observer) => observer.beforeSet<T>(path, value));
   }
 
@@ -44,7 +44,7 @@ class CombiningDriverObserver implements PreferencesDriverObserver {
   }
 
   @override
-  void onGet<T>(String path, T? value) {
+  void onGet<T extends Object>(String path, T? value) {
     _forObservers((observer) => observer.onGet<T>(path, value));
   }
 
@@ -54,12 +54,12 @@ class CombiningDriverObserver implements PreferencesDriverObserver {
   }
 
   @override
-  void onRemove<T>(String path, bool isSuccess) {
+  void onRemove<T extends Object>(String path, bool isSuccess) {
     _forObservers((observer) => observer.onRemove<T>(path, isSuccess));
   }
 
   @override
-  void onSet<T>(String path, T value, bool isSuccess) {
+  void onSet<T extends Object>(String path, T value, bool isSuccess) {
     _forObservers((observer) => observer.onSet(path, value, isSuccess));
   }
 }
