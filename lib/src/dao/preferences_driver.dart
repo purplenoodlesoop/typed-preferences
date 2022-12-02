@@ -105,7 +105,7 @@ class _PreferencesDriver implements PreferencesDriver {
     final isSuccess = await sharedPreferences.remove(path);
 
     _forObservers(
-      (observer) => observer.onRemove(path, isSuccess),
+      (observer) => observer.onRemove<T>(path, isSuccess),
     );
 
     return isSuccess;

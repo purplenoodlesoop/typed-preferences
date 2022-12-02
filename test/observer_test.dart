@@ -25,8 +25,8 @@ class _ActionWriterObserver extends PreferencesDriverObserver {
   }
 
   @override
-  void onRemove(String path, bool isSuccess) {
-    super.onRemove(path, isSuccess);
+  void onRemove<T>(String path, bool isSuccess) {
+    super.onRemove<T>(path, isSuccess);
     _writeAction(['onRemove', path, isSuccess]);
   }
 

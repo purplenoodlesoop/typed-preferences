@@ -15,7 +15,17 @@ abstract class PreferencesDriverObserver {
   @protected
   @optionalTypeArgs
   @mustCallSuper
+  void beforeGet<T>(String path) {}
+
+  @protected
+  @optionalTypeArgs
+  @mustCallSuper
   void onGet<T>(String path, T? value) {}
+
+  @protected
+  @optionalTypeArgs
+  @mustCallSuper
+  void beforeSet<T>(String path, T value) {}
 
   @protected
   @optionalTypeArgs
@@ -23,12 +33,26 @@ abstract class PreferencesDriverObserver {
   void onSet<T>(String path, T value, bool isSuccess) {}
 
   @protected
+  @optionalTypeArgs
   @mustCallSuper
-  void onRemove(String path, bool isSuccess) {}
+  void beforeRemove<T>(String path) {}
+
+  @protected
+  @optionalTypeArgs
+  @mustCallSuper
+  void onRemove<T>(String path, bool isSuccess) {}
+
+  @protected
+  @mustCallSuper
+  void beforeReload() {}
 
   @protected
   @mustCallSuper
   void onReload() {}
+
+  @protected
+  @mustCallSuper
+  void beforeClear() {}
 
   @protected
   @mustCallSuper
