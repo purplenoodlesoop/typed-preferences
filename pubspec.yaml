@@ -1,6 +1,6 @@
 name: typed_preferences
 description: An expressive and type-safe wrapper around Shared Preferences with additional features like Observers and DAOs.
-version: 0.2r.0
+version: 0.2.0
 maintainer: Yakov Karpov (@purplenoodlesoop)
 
 homepage: https://github.com/purplenoodlesoop/typed-preferences

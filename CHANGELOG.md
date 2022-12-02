@@ -12,18 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [BREAKING] `PreferencesDriverObserver`'s methods' generics now must extend `Object`
 - Internal Observers-related refactoring to enforce Separation of Concerns
 
-### Deprecated
-- 
-
-### Removed
-- 
-
-### Fixed
-- 
-
-### Security
-- 
-
 ## [0.1.0+1] – 2022-10-20
 ### Added
 - Shields to README
