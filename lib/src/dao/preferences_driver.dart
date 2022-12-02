@@ -76,6 +76,8 @@ class _PreferencesDriver implements PreferencesDriver {
 
   @override
   Future<bool> clear() async {
+    observer.beforeClear();
+
     final isSuccess = await sharedPreferences.clear();
 
     observer.onClear(isSuccess);
@@ -85,6 +87,8 @@ class _PreferencesDriver implements PreferencesDriver {
 
   @override
   Future<void> reload() async {
+    observer.beforeReload();
+
     await sharedPreferences.reload();
 
     observer.onReload();
@@ -97,6 +101,9 @@ class _PreferencesDriver implements PreferencesDriver {
   @override
   Future<bool> remove<T extends Object>(PreferencesEntry<T> entry) async {
     final path = entry.key;
+
+    observer.beforeRemove<T>(path);
+
     final isSuccess = await sharedPreferences.remove(path);
 
     observer.onRemove<T>(path, isSuccess);
@@ -110,6 +117,9 @@ class _PreferencesDriver implements PreferencesDriver {
     T value,
   ) async {
     final key = entry.key;
+
+    observer.beforeSet<T>(key, value);
+
     final isSuccess = await _matchEntry<T, Future<bool>>(
       entry,
       onString: () => sharedPreferences.setString(key, value as String),
@@ -130,6 +140,9 @@ class _PreferencesDriver implements PreferencesDriver {
   @override
   T? getValue<T extends Object>(PreferencesEntry<T> entry) {
     final key = entry.key;
+
+    observer.beforeGet<T>(key);
+
     final value = _matchEntry<T, Object?>(
       entry,
       onString: () => sharedPreferences.getString(key),
