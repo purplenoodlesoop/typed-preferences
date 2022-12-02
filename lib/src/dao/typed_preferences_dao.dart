@@ -7,9 +7,6 @@ import 'package:typed_preferences/src/util/memento.dart';
 /// A base class for DAOs that allows to define a schema-like object that
 /// works with [SharedPreferences].
 ///
-/// Requires to override a single abstract property [name] that is used to
-/// prefix the DAO's values.
-///
 /// Entry creators are memoized internally and should be declared as getters.
 ///
 /// An example DAO can look like the following:
@@ -32,8 +29,10 @@ abstract class TypedPreferencesDao {
 
   late final Memento _memento = Memento();
 
-  late final String name =
+  late final String _defaultName =
       runtimeType.toString().replaceFirst('Dao', '').toLowerCase();
+
+  String get name => _defaultName;
 
   String _assembleKey(String key) => 'typed.$name.$key';
 
